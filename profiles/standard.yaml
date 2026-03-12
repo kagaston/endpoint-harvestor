@@ -1,0 +1,22 @@
+name: standard
+description: Standard collection — all collectors, no file hashing
+timeout: 300
+hash_files: false
+yara_scan: false
+collectors:
+  - system_info
+  - processes
+  - network
+  - users
+  - persistence
+  - filesystem
+  - logs
+  - browser
+  - shell_history
+  - usb_devices
+  - installed_software
+  - kernel_modules
+  - firewall
+  - environment
+  - clipboard
+  - certificates

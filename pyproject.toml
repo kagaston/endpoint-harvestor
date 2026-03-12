@@ -1,0 +1,48 @@
+[project]
+name = "intrusion-inspector"
+version = "0.1.0"
+description = "Cross-platform DFIR artifact collection, analysis, and triage tool for corporate endpoint incident response"
+requires-python = ">=3.12"
+license = "MIT"
+dependencies = [
+    "ii-settings",
+    "ii-logger",
+    "ii-errors",
+    "ii-utils",
+    "ii-collectors",
+    "ii-analyzers",
+    "ii-reporters",
+    "ii-evidence",
+    "ii-engine",
+    "ii-cli",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0",
+    "pytest-asyncio>=1.0",
+    "pytest-cov>=6.0",
+    "pylint>=3.0",
+    "yamllint>=1.0",
+    "pre-commit>=4.0",
+    "pyyaml>=6.0",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+
+[tool.uv.workspace]
+members = ["app/*"]
+exclude = ["app/__pycache__", "app/.pytest_cache"]
+
+[tool.uv.sources]
+ii-settings = { workspace = true }
+ii-logger = { workspace = true }
+ii-errors = { workspace = true }
+ii-utils = { workspace = true }
+ii-collectors = { workspace = true }
+ii-analyzers = { workspace = true }
+ii-reporters = { workspace = true }
+ii-evidence = { workspace = true }
+ii-engine = { workspace = true }
+ii-cli = { workspace = true }

@@ -1,0 +1,15 @@
+[project]
+name = "ii-utils"
+version = "0.1.0"
+description = "Forensic utility functions for IntrusionInspector"
+requires-python = ">=3.12"
+dependencies = [
+    "ii-logger",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/utils"]

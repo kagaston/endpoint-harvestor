@@ -1,0 +1,23 @@
+[project]
+name = "ii-analyzers"
+version = "0.1.0"
+description = "Analysis engines for IntrusionInspector"
+requires-python = ">=3.12"
+dependencies = [
+    "ii-settings",
+    "ii-logger",
+    "ii-errors",
+    "ii-collectors",
+    "pydantic>=2.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+yara = ["yara-python>=4.3.0"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/analyzers"]

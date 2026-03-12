@@ -1,0 +1,28 @@
+[MAIN]
+load-plugins=pylint.extensions.no_self_use
+
+[FORMAT]
+max-line-length=150
+
+[MESSAGES CONTROL]
+disable=
+    missing-module-docstring,
+    missing-class-docstring,
+    missing-function-docstring,
+    too-few-public-methods,
+    too-many-arguments,
+    too-many-instance-attributes,
+    too-many-return-statements,
+    too-many-branches,
+    too-many-locals,
+    broad-exception-caught,
+    import-error,
+    no-name-in-module,
+    duplicate-code,
+    fixme,
+    line-too-long,
+    invalid-name,
+    redefined-builtin
+
+[DESIGN]
+max-args=10

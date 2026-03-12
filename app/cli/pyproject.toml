@@ -1,0 +1,27 @@
+[project]
+name = "ii-cli"
+version = "0.1.0"
+description = "CLI entry point for IntrusionInspector"
+requires-python = ">=3.12"
+dependencies = [
+    "ii-settings",
+    "ii-logger",
+    "ii-errors",
+    "ii-engine",
+    "ii-evidence",
+    "ii-collectors",
+    "ii-analyzers",
+    "ii-reporters",
+    "click>=8.1.0",
+    "rich>=13.0.0",
+]
+
+[project.scripts]
+intrusion-inspector = "cli.main:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cli"]

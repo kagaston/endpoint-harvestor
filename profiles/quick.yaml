@@ -1,0 +1,11 @@
+name: quick
+description: Quick triage — key collectors only (~30 seconds)
+timeout: 60
+hash_files: false
+yara_scan: false
+collectors:
+  - system_info
+  - processes
+  - network
+  - users
+  - persistence
