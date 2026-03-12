@@ -1,4 +1,4 @@
-# endpoint-harvestor
+# LR : Live Response Agent
 
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-3776ab?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](LICENSE)
