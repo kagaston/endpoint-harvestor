@@ -1,4 +1,4 @@
-# IntrusionInspector
+# endpoint-harvestor
 
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-3776ab?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](LICENSE)
@@ -14,7 +14,7 @@
 [![Platforms](https://img.shields.io/badge/platforms-Windows_|_Linux_|_macOS-333?style=flat-square)](#collectors)
 [![Evidence](https://img.shields.io/badge/evidence-AES--256_encrypted-2563eb?style=flat-square)](#evidence-integrity)
 
-> Cross-platform DFIR artifact collection, analysis, and triage tool for corporate endpoint incident response. Inspired by Mandiant Redline and Plaso/log2timeline.
+> Cross-platform DFIR artifact collection, analysis, and triage tool for corporate endpoint incident response.  
 
 ## Architecture
 
