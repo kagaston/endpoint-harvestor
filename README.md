@@ -1,51 +1,100 @@
 # IntrusionInspector
 
-Cross-platform DFIR artifact collection, analysis, and triage tool for corporate endpoint incident response. Inspired by Mandiant Redline and Plaso/log2timeline.
+[![Python 3.12+](https://img.shields.io/badge/python-3.12+-3776ab?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](LICENSE)
+[![uv](https://img.shields.io/badge/pkg-uv_workspace-de5fe9?style=for-the-badge&logo=uv&logoColor=white)](https://docs.astral.sh/uv/)
+[![MITRE ATT&CK](https://img.shields.io/badge/MITRE_ATT%26CK-mapped-ed1c24?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0xMiAyTDIgN2wzIDEwaDEyVjdMMTIgMnoiLz48L3N2Zz4=)](https://attack.mitre.org)
+[![Tests](https://img.shields.io/badge/tests-151_passing-brightgreen?style=for-the-badge&logo=pytest&logoColor=white)](#development)
+[![Code Style](https://img.shields.io/badge/code_style-pylint-blue?style=for-the-badge&logo=pylint&logoColor=white)](#development)
+
+[![Collectors](https://img.shields.io/badge/collectors-16-0891b2?style=flat-square)](#collectors)
+[![Analyzers](https://img.shields.io/badge/analyzers-6-ca8a04?style=flat-square)](#analyzers)
+[![Reporters](https://img.shields.io/badge/reporters-4-6b21a8?style=flat-square)](#output-structure)
+[![ATT&CK Techniques](https://img.shields.io/badge/ATT%26CK_techniques-12_checks-dc2626?style=flat-square)](#mitre-attck-coverage)
+[![Platforms](https://img.shields.io/badge/platforms-Windows_|_Linux_|_macOS-333?style=flat-square)](#collectors)
+[![Evidence](https://img.shields.io/badge/evidence-AES--256_encrypted-2563eb?style=flat-square)](#evidence-integrity)
+
+> Cross-platform DFIR artifact collection, analysis, and triage tool for corporate endpoint incident response. Inspired by Mandiant Redline and Plaso/log2timeline.
 
 ## Architecture
 
 ```mermaid
-flowchart TD
-    CLI["intrusion-inspector CLI"] --> Engine[Orchestrator]
-    Engine --> ProfileLoader["Profile Loader"]
-    ProfileLoader --> CollectorReg[Collector Registry]
-    Engine --> CollectorReg
-    subgraph CollectorPkg [16 Artifact Collectors]
-        SysInfo[System Info]
-        Procs[Processes]
-        Net[Network]
-        Users[Users]
-        Persist[Persistence]
-        FS[Filesystem]
-        LogColl[Logs]
-        BrowserColl[Browser]
-        ShellHist[Shell History]
-        USB[USB Devices]
-        Software[Software]
-        Kernel[Kernel Modules]
-        FW[Firewall]
-        EnvVars[Environment]
-        Clip[Clipboard]
-        Certs[Certificates]
+flowchart LR
+    subgraph input [Input Layer]
+        CLI["fa:fa-terminal CLI"]
+        Profiles["fa:fa-file-alt Profiles YAML"]
+        Rules["fa:fa-shield-alt Detection Rules"]
     end
-    CollectorReg --> EvidenceLayer[Evidence Integrity]
-    EvidenceLayer --> Store[Artifact Store]
-    Store --> AnalyzerReg[Analyzer Registry]
-    subgraph AnalyzerPkg [Analysis Engines]
-        IOC[IOC Scanner]
-        YARA[YARA Scanner]
-        SigmaEng[Sigma Scanner]
-        Anomaly[Anomaly Detector]
-        Timeline[Timeline Generator]
-        ATTaCK["ATT&CK Mapper"]
+
+    subgraph orchestration [Orchestration]
+        Engine["fa:fa-cogs Orchestrator"]
+        PlatformDetect["fa:fa-desktop Platform Detect"]
     end
-    AnalyzerReg --> ReporterReg[Reporter Registry]
-    subgraph ReporterPkg [Report Generators]
-        HTML["HTML Report"]
-        JSONRep[JSON Export]
-        CSVRep[CSV Timeline]
-        Console[Console Output]
+
+    CLI --> Engine
+    Profiles --> Engine
+    Engine --> PlatformDetect
+
+    subgraph collect [Collection Phase]
+        direction TB
+        subgraph sysCollectors [System]
+            C1["System Info"]
+            C2["Processes"]
+            C3["Network"]
+            C4["Users"]
+        end
+        subgraph secCollectors [Security]
+            C5["Persistence"]
+            C6["Firewall"]
+            C7["Certificates"]
+            C8["Kernel Modules"]
+        end
+        subgraph artifactCollectors [Artifacts]
+            C9["Filesystem"]
+            C10["Logs"]
+            C11["Browser"]
+            C12["Shell History"]
+        end
+        subgraph deviceCollectors [Device/Env]
+            C13["USB Devices"]
+            C14["Software"]
+            C15["Environment"]
+            C16["Clipboard"]
+        end
     end
+
+    PlatformDetect --> collect
+
+    subgraph integrity [Evidence Integrity]
+        Manifest["SHA-256 Manifest"]
+        Audit["Audit Log"]
+        CoC["Chain of Custody"]
+    end
+
+    collect --> integrity
+
+    subgraph analyze [Analysis Phase]
+        IOC["IOC Scanner"]
+        YARA["YARA Engine"]
+        Sigma["Sigma Engine"]
+        Anomaly["Anomaly Detector"]
+        TL["Timeline Generator"]
+        MITRE["ATT&CK Mapper"]
+    end
+
+    Rules --> analyze
+    integrity --> analyze
+
+    subgraph output [Output Phase]
+        HTMLReport["HTML Report + ATT&CK Matrix"]
+        JSONExport["JSON Export"]
+        CSVTimeline["CSV Super Timeline"]
+        ConsoleOut["Rich Console"]
+        NavLayer["ATT&CK Navigator Layer"]
+        SecurePkg["AES-256 Encrypted ZIP"]
+    end
+
+    analyze --> output
 ```
 
 ## Quick Start
